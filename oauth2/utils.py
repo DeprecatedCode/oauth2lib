@@ -8,10 +8,10 @@ UNICODE_ASCII_CHARACTERS = (string.ascii_letters.decode('ascii') +
 
 
 def random_ascii_string(length):
-    ''.join([random.choice(UNICODE_ASCII_CHARACTERS) for x in xrange(length)])
+    return ''.join([random.choice(UNICODE_ASCII_CHARACTERS) for x in xrange(length)])
 
 
-def query_params(url):
+def url_query_params(url):
     """Return query parameters as a dict from the specified URL.
 
     :param url: URL.
@@ -19,6 +19,22 @@ def query_params(url):
     :rtype: dict
     """
     return dict(urlparse.parse_qsl(urlparse.urlparse(url).query, True))
+
+
+def url_dequery(url):
+    """Return a URL with the query component removed.
+
+    :param url: URL to dequery.
+    :type url: str
+    :rtype: str
+    """
+    url = urlparse.urlparse(url)
+    return urlparse.urlunparse((url.scheme,
+                                url.netloc,
+                                url.path,
+                                url.params,
+                                '',
+                                url.fragment))
 
 
 def build_url(base, additional_params=None):
@@ -32,14 +48,17 @@ def build_url(base, additional_params=None):
     :rtype: str
     """
     url = urlparse.urlparse(base)
-    params = {}
-    params.update(urlparse.parse_qsl(url.query, True))  # True preserves empty params
+    query_params = {}
+    query_params.update(urlparse.parse_qsl(url.query, True))
     if additional_params is not None:
-        params.update(additional_params)
+        query_params.update(additional_params)
+        for k, v in additional_params.iteritems():
+            if v is None:
+                query_params.pop(k)
 
     return urlparse.urlunparse((url.scheme,
                                 url.netloc,
                                 url.path,
                                 url.params,
-                                urllib.urlencode(params),
+                                urllib.urlencode(query_params),
                                 url.fragment))

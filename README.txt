@@ -8,7 +8,7 @@ Supported Request Flows
 
     (1A) Authorization Request :: OAuth 2 Section 4.1.1
 
-        [For browser apps this happens in an iframe]
+        [For browser apps this happens in the window]
         Request: GET /get_authorization_code
                         ?response_type=code
                         &client_id={CLIENT_ID}
@@ -34,6 +34,7 @@ Supported Request Flows
                         &client_id={CLIENT_ID}
                         &client_secret={CLIENT_SECRET}
                         &redirect_uri={REDIRECT_URI}
+                        &code={CODE}
 
         Response: HTTP 200
                     {
