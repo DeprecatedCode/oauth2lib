@@ -105,6 +105,8 @@ class AuthorizationProvider(Provider):
 
         validate_scope(self, client_id, scope)
 
+        validate_redirect_uri(self, client_id, redirect_uri)
+
         validate_access(self)  # Use this to validate your app session user
 
         validate_authorization_code(self, client_id, code)
@@ -365,6 +367,10 @@ class AuthorizationProvider(Provider):
         raise NotImplementedError('Subclasses must implement ' \
                                   'validate_client_secret.')
 
+    def validate_redirect_uri(self, client_id, redirect_uri):
+        raise NotImplementedError('Subclasses must implement ' \
+                                  'validate_redirect_uri.')
+
     def validate_scope(self, client_id, scope):
         raise NotImplementedError('Subclasses must implement ' \
                                   'validate_scope.')
@@ -387,5 +393,20 @@ class AuthorizationProvider(Provider):
                                   'persist_token_information.')
 
 
+class ResourceAuthorization(object):
+    """A class containing an OAuth 2.0 authorization."""
+
+    is_oauth = False
+    is_valid = None
+    client_id = None
+    expires_in = None
+    error = None
+
+    def raise
+
+
 class ResourceProvider(Provider):
-    pass
+
+    def get_authorization_header(self):
+        raise NotImplementedError('Subclasses must implement ' \
+                                  'get_authorization_header.')
