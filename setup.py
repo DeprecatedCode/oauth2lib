@@ -5,7 +5,7 @@ setup(
     version='0.0.1',
     author='GraphEffect, Inc.',
     author_email='nate@grapheffect.com',
-    packages=['pyoauth2', 'pyoauth2.test'],
+    packages=['pyoauth2', 'pyoauth2.tests'],
     scripts=[],
     url='https://github.com/GraphEffect/pyoauth2',
     license='LICENSE.txt',

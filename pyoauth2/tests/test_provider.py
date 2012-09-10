@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 import unittest
 from pyoauth2.provider import AuthorizationProvider
-from pyoauth2 import utils
 
 
 class MockAuthorizationProvider(AuthorizationProvider):
