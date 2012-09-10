@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import unittest
-from oauth2 import utils
+from pyoauth2 import utils
 
 
 class UtilsTest(unittest.TestCase):

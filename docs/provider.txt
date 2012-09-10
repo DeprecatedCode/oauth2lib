@@ -1,5 +1,5 @@
-OAuth2 Provider Documentation
-=============================
+pyoauth2 Provider Documentation
+===============================
 
 This library currently implements a very small subset of the OAuth 2.0 draft specification. Supported sections include:
 

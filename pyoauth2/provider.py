@@ -403,16 +403,16 @@ class AuthorizationProvider(Provider):
             'refresh_token': refresh_token
         })
 
-    def get_authorization_code_from_url(self, url):
-        """Get authorization code response from URL. This method will
+    def get_authorization_code_from_uri(self, uri):
+        """Get authorization code response from a URI. This method will
         ignore the domain and path of the request, instead
         automatically parsing the query string parameters.
 
-        :param url: URL to parse for authorization information.
-        :type url: str
+        :param uri: URI to parse for authorization information.
+        :type uri: str
         :rtype: requests.Response
         """
-        params = utils.url_query_params(url)
+        params = utils.url_query_params(uri)
         try:
             return self.get_authorization_code(**params)
         except TypeError as exc:

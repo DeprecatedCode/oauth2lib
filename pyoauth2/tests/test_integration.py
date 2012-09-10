@@ -1,33 +1,27 @@
 from __future__ import absolute_import
 import unittest
-from oauth2.provider import AuthorizationProvider
-from oauth2.client import Client
-from oauth2 import utils
+from pyoauth2.provider import AuthorizationProvider
+from pyoauth2.client import Client
+from pyoauth2 import utils
 
 MOCK_CLIENT_ID = 'abc123456789'
 MOCK_CLIENT_SECRET = 'MNBVCXZLKJHGFDSAPOIUYTREWQ'
 MOCK_REDIRECT_URI = 'https://grapheffect.com/oauth_endpoint'
 MOCK_AUTHORIZATION_CODE = 'poiuytrewqlkjhgfdsamnbvcxz0987654321'
+MOCK_REFRESH_TOKEN = 'uhbygvtfcrdxeszokmijn'
 
 
 class MockClient(Client):
 
-    def get_url(self, url):
-
-        if url.startswith('https://example.com/auth'):
-            return self.mock_provider_get_authorization_code(url)
-
-        elif url.startswith('https://example.com/token'):
-            return self.mock_provider_get_token(url)
+    def http_post(self, url, data=None):
+        if url.startswith('https://example.com/token'):
+            return self.mock_provider_get_token_from_post_data(data)
 
         raise Exception('Test fail')
 
-    def mock_get_authorization_code(self, **params):
-        return self.get_url(self.get_authorization_code_uri(**params))
-
 
 class MockAuthorizationProvider(AuthorizationProvider):
-    """Implement an authorization OAuth2 provider for testing purposes."""
+    """Implement an authorization pyoauth2 provider for testing purposes."""
 
     def validate_client_id(self, client_id):
         return client_id == MOCK_CLIENT_ID
@@ -41,8 +35,18 @@ class MockAuthorizationProvider(AuthorizationProvider):
             return True
         return False
 
-    def validate_authorization_code(self, client_id, code):
-        return code == MOCK_AUTHORIZATION_CODE
+    def validate_redirect_uri(self, client_id, redirect_uri):
+        return redirect_uri.startswith(MOCK_REDIRECT_URI)
+
+    def from_authorization_code(self, client_id, code, scope):
+        if code == MOCK_AUTHORIZATION_CODE:
+            return {'session': '12345'}
+        return None
+
+    def from_refresh_token(self, client_id, refresh_token, scope):
+        if refresh_token == MOCK_REFRESH_TOKEN:
+            return {'session': '56789'}
+        return None
 
     def validate_access(self):
         return True
@@ -50,8 +54,15 @@ class MockAuthorizationProvider(AuthorizationProvider):
     def persist_authorization_code(self, client_id, code, scope):
         pass
 
-    def persist_token_information(self, client_id, code, scope, access_token,
-                                  token_type, expires_in, refresh_token):
+    def persist_token_information(self, client_id, scope, access_token,
+                                  token_type, expires_in, refresh_token,
+                                  data):
+        pass
+
+    def discard_authorization_code(self, client_id, code):
+        pass
+
+    def discard_refresh_token(self, client_id, refresh_token):
         pass
 
 
@@ -65,15 +76,13 @@ class IntegrationTest(unittest.TestCase):
                                  token_uri='https://example.com/token',
                                  redirect_uri=MOCK_REDIRECT_URI + '?param=123')
 
-        self.client.mock_provider_get_authorization_code = \
-            self.provider.get_authorization_code_from_url
-
-        self.client.mock_provider_get_token = \
-            self.provider.get_token_from_url
+        self.client.mock_provider_get_token_from_post_data = \
+            self.provider.get_token_from_post_data
 
     def test_get_authorization_code(self):
         """Test client's auth code URI generation and provider's response."""
-        response = self.client.mock_get_authorization_code(scope='example')
+        uri = self.client.get_authorization_code_uri(scope='example')
+        response = self.provider.get_authorization_code_from_uri(uri)
 
         # Check status code
         self.assertEquals(302, response.status_code)

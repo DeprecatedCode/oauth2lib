@@ -1,13 +1,13 @@
 from distutils.core import setup
 
 setup(
-    name='OAuth2',
+    name='pyoauth2',
     version='0.0.1',
     author='GraphEffect, Inc.',
     author_email='nate@grapheffect.com',
-    packages=['oauth2', 'oauth2.test'],
+    packages=['pyoauth2', 'pyoauth2.test'],
     scripts=[],
-    url='https://github.com/GraphEffect/oauth2',
+    url='https://github.com/GraphEffect/pyoauth2',
     license='LICENSE.txt',
     description='OAuth 2.0 compliant client and server library.',
     long_description=open('README.txt').read(),

@@ -26,33 +26,35 @@ class Client:
         self.token_uri = token_uri
 
     @property
-    def response_type(self):
+    def default_response_type(self):
         return 'code'
 
     @property
-    def grant_type(self):
+    def default_grant_type(self):
         return 'authorization_code'
 
-    def get_url(self, url):
-        """GET the contents of URL as a response object.
+    def http_post(self, url, data=None):
+        """POST to URL and get result as a response object.
 
-        :param url: URL to GET.
+        :param url: URL to POST.
         :type url: str
+        :param data: Data to send in the form body.
+        :type data: str
         :rtype: requests.Response
         """
         if not url.startswith('https://'):
             raise ValueError('Protocol must be HTTPS, invalid URL: %s' % url)
-        return requests.get(url, verify=True)
+        return requests.post(url, data, verify=True)
 
     def get_authorization_code_uri(self, **params):
-        """Construct a full URI that can be used to obtain an authorization
+        """Construct a full URL that can be used to obtain an authorization
         code from the provider authorization_uri. Use this URI in a client
         frame to cause the provider to generate an authorization code.
 
         :rtype: str
         """
         if 'response_type' not in params:
-            params['response_type'] = self.response_type
+            params['response_type'] = self.default_response_type
         params.update({'client_id': self.client_id,
                        'redirect_uri': self.redirect_uri})
         return utils.build_url(self.authorization_uri, params)
@@ -67,8 +69,8 @@ class Client:
         """
         params['code'] = code
         if 'grant_type' not in params:
-            params['grant_type'] = self.grant_type
+            params['grant_type'] = self.default_grant_type
         params.update({'client_id': self.client_id,
                        'client_secret': self.client_secret,
                        'redirect_uri': self.redirect_uri})
-        return self.get_url(utils.build_url(self.token_uri, params)).json
+        return self.http_post(self.token_uri, params).json

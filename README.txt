@@ -1,5 +1,5 @@
-OAuth2 Client and Provider Library
-==================================
+pyoauth2: OAuth 2.0 Client and Provider Library
+===============================================
 
 Supported Request Flows
 -----------------------
