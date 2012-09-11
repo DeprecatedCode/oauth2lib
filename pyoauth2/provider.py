@@ -2,6 +2,7 @@ import json
 import logging
 from requests import Response
 from cStringIO import StringIO
+import werkzeug.exceptions
 from . import utils
 
 
@@ -444,7 +445,7 @@ class AuthorizationProvider(Provider):
         """
         try:
             if 'refresh_token' in data:
-                return self.get_refresh_token(**data)
+                return self.refresh_token(**data)
             return self.get_token(**data)
         except TypeError as exc:
             self._handle_exception(exc)
@@ -504,7 +505,7 @@ class AuthorizationProvider(Provider):
                                   'discard_refresh_token.')
 
 
-class OAuthError(StandardError):
+class OAuthError(werkzeug.exceptions.HTTPException):
     """OAuth error, including the OAuth error reason."""
     def __init__(self, reason, *args, **kwargs):
         self.reason = reason
