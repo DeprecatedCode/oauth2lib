@@ -220,7 +220,8 @@ class AuthorizationProvider(Provider):
             return self._make_redirect_error_response(redirect_uri, err)
 
         # Check redirect URI
-        is_valid_redirect_uri = self.validate_redirect_uri(client_id, redirect_uri)
+        is_valid_redirect_uri = self.validate_redirect_uri(client_id,
+                                                           redirect_uri)
         if not is_valid_redirect_uri:
             return self._invalid_redirect_uri_response()
 
@@ -263,11 +264,11 @@ class AuthorizationProvider(Provider):
                                    status_code=302)
 
     def refresh_token(self,
-                          grant_type,
-                          client_id,
-                          client_secret,
-                          refresh_token,
-                          **params):
+                      grant_type,
+                      client_id,
+                      client_secret,
+                      refresh_token,
+                      **params):
         """Generate access token HTTP response from a refresh token.
 
         :param grant_type: Desired grant type. Must be "refresh_token".
@@ -360,7 +361,8 @@ class AuthorizationProvider(Provider):
         is_valid_client_id = self.validate_client_id(client_id)
         is_valid_client_secret = self.validate_client_secret(client_id,
                                                              client_secret)
-        is_valid_redirect_uri = self.validate_redirect_uri(client_id, redirect_uri)
+        is_valid_redirect_uri = self.validate_redirect_uri(client_id,
+                                                           redirect_uri)
 
         scope = params.get('scope', '')
         is_valid_scope = self.validate_scope(client_id, scope)
