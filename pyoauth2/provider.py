@@ -413,6 +413,10 @@ class AuthorizationProvider(Provider):
         :rtype: requests.Response
         """
         params = utils.url_query_params(uri)
+
+
+
+        import ipdb; ipdb.set_trace()
         try:
             return self.get_authorization_code(**params)
         except TypeError as exc:
