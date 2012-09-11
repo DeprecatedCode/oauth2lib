@@ -505,7 +505,7 @@ class AuthorizationProvider(Provider):
                                   'discard_refresh_token.')
 
 
-class OAuthError(werkzeug.exceptions.HTTPException):
+class OAuthError(werkzeug.exceptions.Unauthorized):
     """OAuth error, including the OAuth error reason."""
     def __init__(self, reason, *args, **kwargs):
         self.reason = reason
