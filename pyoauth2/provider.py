@@ -417,6 +417,15 @@ class AuthorizationProvider(Provider):
         """
         params = utils.url_query_params(uri)
         try:
+            if 'response_type' not in params:
+                raise TypeError('Missing parameter response_type in URL query')
+
+            if 'client_id' not in params:
+                raise TypeError('Missing parameter client_id in URL query')
+
+            if 'redirect_uri' not in params:
+                raise TypeError('Missing parameter redirect_uri in URL query')
+
             return self.get_authorization_code(**params)
         except TypeError as exc:
             self._handle_exception(exc)
