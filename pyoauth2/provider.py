@@ -6,7 +6,7 @@ import werkzeug.exceptions
 from . import utils
 
 
-class Provider:
+class Provider(object):
     """Base provider class for different types of OAuth 2.0 providers."""
 
     def _handle_exception(self, exc):
