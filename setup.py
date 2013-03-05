@@ -12,7 +12,7 @@ setup(
     description='OAuth 2.0 compliant client and server library.',
     long_description=open('README.txt').read(),
     install_requires=[
-        "requests >= 0.14",
+        "requests >= 1.1.0",
         "PyCrypto >= 2.6"
     ]
 )
