@@ -2,7 +2,7 @@ import requests
 from . import utils
 
 
-class Client:
+class Client(object):
 
     def __init__(self, client_id, client_secret, redirect_uri, \
                  authorization_uri, token_uri):
