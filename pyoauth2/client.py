@@ -73,4 +73,4 @@ class Client(object):
         params.update({'client_id': self.client_id,
                        'client_secret': self.client_secret,
                        'redirect_uri': self.redirect_uri})
-        return self.http_post(self.token_uri, params).json
+        return self.http_post(self.token_uri, params).json()

@@ -10,7 +10,6 @@ class MockAuthorizationProvider(AuthorizationProvider):
 class AuthorizationProviderTest(unittest.TestCase):
 
     def setUp(self):
-
         self.provider = MockAuthorizationProvider()
 
     def test_make_redirect_error_response(self):
@@ -27,7 +26,7 @@ class AuthorizationProviderTest(unittest.TestCase):
 
         response = self.provider._make_json_error_response('some_error')
         self.assertEquals(400, response.status_code)
-        self.assertEquals({'error': 'some_error'}, response.json)
+        self.assertEquals({'error': 'some_error'}, response.json())
 
     def test_get_authorization_code_invalid_response_type(self):
 
