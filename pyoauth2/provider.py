@@ -5,7 +5,7 @@ from cStringIO import StringIO
 try:
     from werkzeug.exceptions import Unauthorized
 except ImportError:
-    Unauthrorized = Exception
+    Unauthorized = Exception
 from . import utils
 
 
