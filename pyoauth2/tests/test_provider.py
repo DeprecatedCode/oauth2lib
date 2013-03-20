@@ -26,7 +26,11 @@ class AuthorizationProviderTest(unittest.TestCase):
 
         response = self.provider._make_json_error_response('some_error')
         self.assertEquals(400, response.status_code)
-        self.assertEquals({'error': 'some_error'}, response.json())
+        try:
+            response_json = response.json()
+        except TypeError:
+            response_json = response.json
+        self.assertEquals({'error': 'some_error'}, response_json)
 
     def test_get_authorization_code_invalid_response_type(self):
 
