@@ -2,7 +2,10 @@ import json
 import logging
 from requests import Response
 from cStringIO import StringIO
-import werkzeug.exceptions
+try:
+    from werkzeug.exceptions import Unauthorized
+except ImportError:
+    Unauthorized = Exception
 from . import utils
 
 
@@ -525,7 +528,7 @@ class AuthorizationProvider(Provider):
                                   'discard_refresh_token.')
 
 
-class OAuthError(werkzeug.exceptions.Unauthorized):
+class OAuthError(Unauthorized):
     """OAuth error, including the OAuth error reason."""
     def __init__(self, reason, *args, **kwargs):
         self.reason = reason
