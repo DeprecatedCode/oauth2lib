@@ -459,7 +459,7 @@ class AuthorizationProvider(Provider):
             # Verify OAuth 2.0 Parameters
             for x in ['grant_type', 'client_id', 'client_secret']:
                 if not data.get(x):
-                    raise TypeError("Missing required OAuth 2.0 POST param: {}".format(x))
+                    raise TypeError("Missing required OAuth 2.0 POST param: {0}".format(x))
             
             # Handle get token from refresh_token
             if 'refresh_token' in data:
@@ -468,7 +468,7 @@ class AuthorizationProvider(Provider):
             # Handle get token from authorization code
             for x in ['redirect_uri', 'code']:
                 if not data.get(x):
-                    raise TypeError("Missing required OAuth 2.0 POST param: {}".format(x))            
+                    raise TypeError("Missing required OAuth 2.0 POST param: {0}".format(x))            
             return self.get_token(**data)
         except TypeError as exc:
             self._handle_exception(exc)
