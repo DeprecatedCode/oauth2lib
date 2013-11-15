@@ -1,18 +1,17 @@
 from distutils.core import setup
 
 setup(
-    name='pyoauth2',
-    version='0.0.1',
-    author='GraphEffect, Inc.',
-    author_email='nate@grapheffect.com',
-    packages=['pyoauth2', 'pyoauth2.tests'],
+    name='oauth2lib',
+    version='1.0.0',
+    author='Nate Ferrero',
+    author_email='nateferrero@gmail.com',
+    packages=['oauth2lib', 'oauth2lib.tests'],
     scripts=[],
-    url='https://github.com/GraphEffect/pyoauth2',
-    license='LICENSE.txt',
+    url='https://github.com/NateFerrero/oauth2lib',
+    license='LICENSE.md',
     description='OAuth 2.0 compliant client and server library.',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     install_requires=[
-        "requests >= 0.14",
-        "PyCrypto >= 2.6"
+        "requests >= 0.14"
     ]
 )
