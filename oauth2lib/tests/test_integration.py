@@ -1,12 +1,12 @@
 from __future__ import absolute_import
 import unittest
-from pyoauth2.provider import AuthorizationProvider
-from pyoauth2.client import Client
-from pyoauth2 import utils
+from oauth2lib.provider import AuthorizationProvider
+from oauth2lib.client import Client
+from oauth2lib import utils
 
 MOCK_CLIENT_ID = 'abc123456789'
 MOCK_CLIENT_SECRET = 'MNBVCXZLKJHGFDSAPOIUYTREWQ'
-MOCK_REDIRECT_URI = 'https://grapheffect.com/oauth_endpoint'
+MOCK_REDIRECT_URI = 'https://myapp.com/oauth_endpoint'
 MOCK_AUTHORIZATION_CODE = 'poiuytrewqlkjhgfdsamnbvcxz0987654321'
 MOCK_REFRESH_TOKEN = 'uhbygvtfcrdxeszokmijn'
 
@@ -21,7 +21,7 @@ class MockClient(Client):
 
 
 class MockAuthorizationProvider(AuthorizationProvider):
-    """Implement an authorization pyoauth2 provider for testing purposes."""
+    """Implement an authorization oauth2lib provider for testing purposes."""
 
     def validate_client_id(self, client_id):
         return client_id == MOCK_CLIENT_ID
