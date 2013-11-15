@@ -1,12 +1,11 @@
-pyoauth2: OAuth 2.0 Client and Provider Library
-===============================================
+oauth2lib
+=========
 
-Supported Request Flows
------------------------
+## Python OAuth 2.0 Client and Provider Library
 
-(1) Authorization Code Grant :: OAuth 2 Section 4.1
+### Authorization Code Grant :: OAuth 2 Section 4.1
 
-    (1A) Authorization Request :: OAuth 2 Section 4.1.1
+Authorization Request :: OAuth 2 Section 4.1.1
 
         [For browser apps this happens in the window]
         Request: GET /get_authorization_code
@@ -26,7 +25,7 @@ Supported Request Flows
                         ?error=access_denied
                         &state={STATE}
 
-    (1B) Access Token Request :: OAuth 2 Section 4.1.3
+Access Token Request :: OAuth 2 Section 4.1.3
 
         [Server side only]
         Request: GET /get_access_token
